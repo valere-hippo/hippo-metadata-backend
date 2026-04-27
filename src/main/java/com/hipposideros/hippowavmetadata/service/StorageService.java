@@ -54,9 +54,9 @@ public class StorageService {
             String finalName;
             if (timestamp != null && !timestamp.isBlank()) {
                 String safeTs = formatTimestampForFilename(timestamp);
-                finalName = baseName + "_" + safeTs + extension;
+                finalName = baseName;
             } else {
-                finalName = baseName + "_no-timestamp" + extension;
+                finalName = baseName;
             }
 
             Path finalPath = baseDir.resolve(finalName);

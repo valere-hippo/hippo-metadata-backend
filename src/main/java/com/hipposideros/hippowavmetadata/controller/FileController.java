@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -54,6 +55,17 @@ public class FileController {
                             "attachment; filename=\"" + filePath.getFileName().toString() + "\"")
                     .body(resource);
 
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping("/{fileId}")
+    public ResponseEntity<Void> deleteFile(@PathVariable String fileId) {
+        try {
+            Path filePath = storageService.resolve(fileId);
+            Files.deleteIfExists(filePath);
+            return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
